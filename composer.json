@@ -1,0 +1,27 @@
+{
+  "name": "akh/optimization",
+  "description": "Инструменты для оптимизации сайта на bitrix",
+  "keywords": [
+    "webp",
+    "bitrix",
+    "image",
+    "lazy content"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexey Khozyaykin"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "akh\\Optimization\\": "src"
+    }
+  },
+  "require": {
+    "ext-exif": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0"
+  }
+}
