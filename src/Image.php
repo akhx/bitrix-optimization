@@ -177,9 +177,8 @@ class Image
             $exif = exif_imagetype($_SERVER['DOCUMENT_ROOT'] . $src);
 
             if (in_array($exif, static::$option['webp_support'])) {
-                $clearSrc = str_replace(['.png', '.jpg', '.jpeg'], '', $src);
-
                 if (empty($endSrc)) {
+                    $clearSrc = str_replace(['.png', '.jpg', '.jpeg'], '', $src);
                     $endSrc = static::$option['webp_folder'] . str_replace('/upload/', '/', $clearSrc) . '.webp';
                 }
 
