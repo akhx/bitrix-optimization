@@ -12,27 +12,11 @@ use Bitrix\Main\Context;
  */
 class LazyContent
 {
-    /**
-     * @var LazyContent
-     */
-    protected static $instance = null;
     protected static $loadJs;
     /**
      * @var string $requestKey Ключ запроса вызова
      */
     private static $requestKey, $currentKey;
-
-    /**
-     * @return LazyContent
-     */
-    public static function getInstance(): LazyContent
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new self();
-        }
-
-        return self::$instance;
-    }
 
     /**
      * Основная функция класса
@@ -165,11 +149,10 @@ class LazyContent
      *
      * @param string $filePath Файл для ленивой загрузки
      * @return bool
-     * @uses \CBXVirtualIo::$instance
      */
     public static function fileExist(string $filePath): bool
     {
-        if (substr($filePath, 0, 1) != '/') {
+        if (substr($filePath, 0, 1) !== '/') {
             $path = getLocalPath('templates/' . SITE_TEMPLATE_ID . '/' . $filePath, BX_PERSONAL_ROOT);
             if ($path === false) {
                 $path = getLocalPath('templates/.default/' . $filePath, BX_PERSONAL_ROOT);
@@ -216,13 +199,13 @@ class LazyContent
      */
     private static function isLazyAjax(): bool
     {
-        $xhr = $_SERVER['HTTP_X_REQUESTED_WITH'] && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+        $xhr = $_SERVER['HTTP_X_REQUESTED_WITH'] && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
         if ($xhr) {
             $context = Context::getCurrent();
             $request = $context->getRequest();
             if ($request->getPost('LAZY') || $request->getQuery('LAZY')) {
                 if ($request->getPost('KEY') || $request->getQuery('KEY')) {
-                    self::$requestKey = $request->getPost('KEY') ? $request->getPost('KEY') : $request->getQuery('KEY');
+                    self::$requestKey = $request->getPost('KEY') ?: $request->getQuery('KEY');
 
                     return true;
                 }
