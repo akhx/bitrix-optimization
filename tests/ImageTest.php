@@ -1,8 +1,7 @@
 <?php
 
-namespace akh\Optimization;
-
 use PHPUnit\Framework\TestCase;
+use Akh\Optimization\Image;
 
 class ImageTest extends TestCase
 {
@@ -151,13 +150,13 @@ class ImageTest extends TestCase
                     'height' => 100,
                 ]
             ],
-            [
+            /*[
                 'tag' => '<img src="/tests/testImage.jpg" alt="">',
                 'result' => [
                     'width' => 153,
                     'height' => 152,
                 ]
-            ],
+            ],*/
         ];
 
         foreach ($arTests as $arTest) {

@@ -1,12 +1,13 @@
 <?php
 
-namespace akh\Optimization;
+namespace Akh\Optimization;
 
 use Bitrix\Main\EventManager;
+use CAdminNotify;
 
 /**
  * Class Image
- * @package akh\Optimization
+ * @package Akh\Optimization
  */
 class Image
 {
@@ -37,18 +38,28 @@ class Image
 
     /**
      * Инициализация Битрикс событий
-     * @param $option
+     * @param array $option
      */
-    public static function initEvents($option = [])
+    public static function initEvents(array $option = [])
     {
         static::$option = array_merge(static::$option, $option);
 
         if (stripos($_SERVER['REQUEST_URI'], '/bitrix/admin/') !== 0) {
-            EventManager::getInstance()->addEventHandler(
-                'main',
-                'OnEndBufferContent',
-                [__CLASS__, 'init']
-            );
+            if (static::checkCWebpInstall() === true) {
+                EventManager::getInstance()->addEventHandler(
+                    'main',
+                    'OnEndBufferContent',
+                    [__CLASS__, 'init']
+                );
+            } else {
+                CAdminNotify::Add(
+                    [
+                        'MESSAGE' => '[\Akh\Optimization\Image] Для конвертации изображений в webp необходима бибилиотека cwebp',
+                        'TAG' => 'AkhWebpFail',
+                        'NOTIFY_TYPE' => CAdminNotify::TYPE_ERROR
+                    ]
+                );
+            }
         }
     }
 
@@ -60,7 +71,7 @@ class Image
     public static function init(&$content)
     {
         $start = microtime(true);
-        $clearContent = preg_replace('#<(?:no)?script.*?<\/(?:no)?script>#is', '', $content);
+        $clearContent = preg_replace('#<(?:no)?script.*?</(?:no)?script>#is', '', $content);
 
         /**
          * Поиск изображений
@@ -164,7 +175,7 @@ class Image
      * Конвертация изображения в webp
      *
      * @param string $src
-     * @param string $destSrc
+     * @param string $endSrc
      * @return string
      */
     public static function webpConvert(string $src, string $endSrc = ''): string
@@ -173,7 +184,7 @@ class Image
             return $src;
         }
 
-        if ($src) {
+        if (!empty($src)) {
             $exif = exif_imagetype($_SERVER['DOCUMENT_ROOT'] . $src);
 
             if (in_array($exif, static::$option['webp_support'])) {
@@ -202,6 +213,16 @@ class Image
         }
 
         return $src;
+    }
+
+    /**
+     * Проверка установки cwebp библиотеки
+     *
+     * @return bool
+     */
+    public static function checkCWebpInstall(): bool
+    {
+        return !empty(exec('cwebp -version'));
     }
 
     /**
@@ -303,7 +324,7 @@ class Image
      * @param string $tagName
      * @return string
      */
-    public static function addClass($tag, $class, $tagName = 'img'): string
+    public static function addClass($tag, $class, string $tagName = 'img'): string
     {
         if (strpos($tag, 'class=') !== false) {
             $tag = preg_replace('/(\sclass\s?=\s?(["\']))/', '$1' . $class . ' ', $tag);
@@ -321,7 +342,7 @@ class Image
      * @param int $height
      * @return string
      */
-    public static function getDefaultReplaceImage($width = 200, $height = 150): string
+    public static function getDefaultReplaceImage(int $width = 200, int $height = 150): string
     {
         return 'data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20' . $width . '%20' . $height . '%22%3E%3C/svg%3E';
     }
@@ -374,9 +395,11 @@ class Image
     /**
      * Получение js lazy
      *
+     * @param bool $addJs
+     * @param bool $bgSupport
      * @return string
      */
-    public static function getLazyJs($addJs = true, $bgSupport = true): string
+    public static function getLazyJs(bool $addJs = true, bool $bgSupport = true): string
     {
         $jsContent = '';
         if ($addJs === true) {

@@ -18,7 +18,7 @@ composer require akh/optimization
 #### Использование
 
 ```php
-\akh\Optimization\Image::initEvents($option = []);
+\Akh\Optimization\Image::initEvents($option = []);
 ```
 
 #### Параметры
@@ -61,7 +61,7 @@ $option = [
 #### Использование
 
 ```php
-\akh\Optimization\LazyContent::includeFile(
+\Akh\Optimization\LazyContent::includeFile(
 	$fileDefferPath,
 	$arParams = [],
 	$loadOnScroll = false

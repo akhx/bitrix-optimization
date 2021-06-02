@@ -1,6 +1,6 @@
 <?php
 
-namespace akh\Optimization;
+namespace Akh\Optimization;
 
 use Bitrix\Main\Context;
 
@@ -8,7 +8,7 @@ use Bitrix\Main\Context;
 /**
  * Class LazyContent
  *
- * @package akh\Optimization
+ * @package Akh\Optimization
  */
 class LazyContent
 {
