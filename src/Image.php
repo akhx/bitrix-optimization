@@ -29,6 +29,18 @@ class Image
             'swiper-lazy'
         ],
         'webp_active' => true,
+        'webp_checkHref' => false,
+        'webp_checkHrefExclusions' => [
+            '#',
+            '.css',
+            '.js',
+            '.html',
+            '.svg',
+            '.php',
+            'mailto:',
+            'tel:',
+            'javascript:'
+        ],
         'webp_support' => [
             IMAGETYPE_JPEG,
             IMAGETYPE_PNG
@@ -102,6 +114,27 @@ class Image
             }
 
             $content = str_replace(array_keys($toReplace), array_values($toReplace), $content);
+        }
+
+        /**
+         * поиск изображений в ссылках
+         */
+        if (static::$option['webp_active'] === true && static::$option['webp_checkHref'] === true) {
+            if (preg_match_all('#href=["\'](.*)["\']#Usmi', $clearContent, $matches)) {
+
+                foreach ($matches[1] as $href) {
+                    if (substr($href, -1) === '/') {
+                        continue;
+                    }
+
+                    if (str_ireplace(static::$option['webp_checkHrefExclusions'], '', $href) === $href) {
+                        $endSrc = static::webpConvert($href);
+                        if ($href !== $endSrc) {
+                            $content = str_replace($href, $endSrc, $content);
+                        }
+                    }
+                }
+            }
         }
 
         /**
@@ -429,4 +462,3 @@ class Image
         return $jsContent;
     }
 }
-
