@@ -42,6 +42,18 @@ $option = [
         'swiper-lazy'
     ],
     'webp_active' => true,
+    'webp_checkHref' => false,
+    'webp_checkHrefExclusions' => [
+        '#',
+        '.css',
+        '.js',
+        '.html',
+        '.svg',
+        '.php',
+        'mailto:',
+        'tel:',
+        'javascript:'
+    ],
     'webp_support' => [
         IMAGETYPE_JPEG,
         IMAGETYPE_PNG
