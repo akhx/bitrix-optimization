@@ -234,7 +234,7 @@ class Image
                     $distPath = implode('/', $distPath);
                     mkdir($distPath, 0755, true);
 
-                    $command = 'cwebp -q 80 ' . $_SERVER['DOCUMENT_ROOT'] . $src . ' -o ' . $_SERVER['DOCUMENT_ROOT'] . $endSrc;
+                    $command = 'cwebp -quiet -q 80 ' . $_SERVER['DOCUMENT_ROOT'] . $src . ' -o ' . $_SERVER['DOCUMENT_ROOT'] . $endSrc;
                     exec($command, $a, $b);
                     $convert = file_exists($_SERVER['DOCUMENT_ROOT'] . $endSrc);
                 }
