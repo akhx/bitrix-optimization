@@ -77,7 +77,7 @@ class ImageTest extends TestCase
             ],
             [
                 'tag' => '<img src="/tests/testImage.jpg" srcset="/tests/testImage.jpg x1, /tests/testImage.jpg x2" alt="">',
-                'result' => '<img class="lazyload" src="' . $dummy . '" data-src="/tests/testImage.jpg" data-srcset="/tests/testImage.jpg x1, /tests/testImage.jpg x2" alt="">'
+                'result' => '<img class="lazyload" srcset="' . $dummy . '" src="/tests/testImage.jpg" data-srcset="/tests/testImage.jpg x1, /tests/testImage.jpg x2" alt="">'
             ],
             [
                 'tag' => '<img class="image" src="/tests/testImage.jpg" alt="">',
