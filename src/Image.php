@@ -290,15 +290,22 @@ class Image
                     $dummy = static::getOneGifImage();
             }
 
-
             $tag = static::addClass($tag, 'lazyload');
-            $tag = str_replace(
-                ' src=',
-                ' src="' . $dummy . '" data-src=',
-                $tag
-            );
             $tag = str_replace(' srcset=', ' data-srcset=', $tag);
             $tag = str_replace('sizes=', 'data-sizes=', $tag);
+            if (strpos($tag, 'srcset=') !== false) {
+                $tag = str_replace(
+                    ' src=',
+                    ' srcset="' . $dummy . '" src=',
+                    $tag
+                );
+            } else {
+                $tag = str_replace(
+                    ' src=',
+                    ' src="' . $dummy . '" data-src=',
+                    $tag
+                );
+            }
         }
 
         return $tag;
