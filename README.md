@@ -18,7 +18,7 @@ composer require akh/optimization
 #### Использование
 
 ```php
-\Akh\Optimization\Image::initEvents($option = []);
+\Akh\BitrixOptimization\Image::initEvents($option = []);
 ```
 
 #### Параметры
@@ -73,7 +73,7 @@ $option = [
 #### Использование
 
 ```php
-\Akh\Optimization\LazyContent::includeFile(
+\Akh\BitrixOptimization\LazyContent::includeFile(
 	$fileDefferPath,
 	$arParams = [],
 	$loadOnScroll = false

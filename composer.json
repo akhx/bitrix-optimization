@@ -1,5 +1,5 @@
 {
-  "name": "akh/optimization",
+  "name": "akh/bitrix-optimization",
   "description": "Инструменты для оптимизации сайта на bitrix",
   "keywords": [
     "webp",
@@ -15,7 +15,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Akh\\Optimization\\": "src"
+      "Akh\\BitrixOptimization\\": "src"
     }
   },
   "require": {

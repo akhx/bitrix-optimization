@@ -1,13 +1,13 @@
 <?php
 
-namespace Akh\Optimization;
+namespace Akh\BitrixOptimization;
 
 use Bitrix\Main\EventManager;
 use CAdminNotify;
 
 /**
  * Class Image
- * @package Akh\Optimization
+ * @package Akh\BitrixOptimization
  */
 class Image
 {
@@ -66,7 +66,7 @@ class Image
             } else {
                 CAdminNotify::Add(
                     [
-                        'MESSAGE' => '[\Akh\Optimization\Image] Для конвертации изображений в webp необходима бибилиотека cwebp',
+                        'MESSAGE' => '[\Akh\BitrixOptimization\Image] Для конвертации изображений в webp необходима бибилиотека cwebp',
                         'TAG' => 'AkhWebpFail',
                         'NOTIFY_TYPE' => CAdminNotify::TYPE_ERROR
                     ]

@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Akh\Optimization\Image;
+use Akh\BitrixOptimization\Image;
 
 class ImageTest extends TestCase
 {
