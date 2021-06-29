@@ -5,7 +5,7 @@
 ### Установка
 
 ```shell
-composer require akh/optimization
+composer require akh/bitrix-optimization
 ```
 
 ## Оптимизация изображений
