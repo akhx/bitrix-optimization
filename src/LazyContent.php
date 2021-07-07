@@ -103,6 +103,15 @@ class LazyContent
 
         unset($arParams['DATA_OFFSET_LOAD']);
 
+        if (static::isAdmin() === true && $_REQUEST['include_lazy_content'] === 'Y') {
+            self::getApplication()->IncludeFile(
+                $filePath,
+                $arParams
+            );
+
+            return;
+        }
+
         /**
          * Определяем метод работы в зависимости от типа Http-запроса
          */
@@ -297,5 +306,14 @@ class LazyContent
 
         return $APPLICATION;
     }
-}
 
+    protected static function isAdmin(): bool
+    {
+        global $USER;
+        if (is_object($USER)) {
+            return $USER->isAdmin();
+        }
+
+        return false;
+    }
+}
