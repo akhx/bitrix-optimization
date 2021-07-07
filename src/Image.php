@@ -54,6 +54,10 @@ class Image
      */
     public static function initEvents(array $option = [])
     {
+        if ($_REQUEST['stop_convert'] === 'Y') {
+            $option['lazy_active'] = false;
+        }
+
         static::$option = array_merge(static::$option, $option);
 
         if (stripos($_SERVER['REQUEST_URI'], '/bitrix/admin/') !== 0) {
@@ -170,7 +174,7 @@ class Image
             }
         }
 
-        if (static::$option['debug'] === true) {
+        if (static::$option['debug'] === true && static::isAdmin() === true) {
             $time = microtime(true) - $start;
             $content .= 'Время на оптимизацию ' . $time . ' сек.';
         }
@@ -226,7 +230,8 @@ class Image
                     $endSrc = static::$option['webp_folder'] . str_replace('/upload/', '/', $clearSrc) . '.webp';
                 }
 
-                if (file_exists($_SERVER['DOCUMENT_ROOT'] . $endSrc)) {
+                $clearCache = $_REQUEST['clear_cache'] === 'Y' && static::isAdmin() === true;
+                if (file_exists($_SERVER['DOCUMENT_ROOT'] . $endSrc) && $clearCache !== true) {
                     $convert = true;
                 } else {
                     $distPath = explode('/', $_SERVER['DOCUMENT_ROOT'] . $endSrc);
@@ -467,5 +472,15 @@ class Image
         }
 
         return $jsContent;
+    }
+
+    protected static function isAdmin(): bool
+    {
+        global $USER;
+        if (is_object($USER)) {
+            return $USER->isAdmin();
+        }
+
+        return false;
     }
 }

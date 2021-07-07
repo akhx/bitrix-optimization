@@ -1,5 +1,7 @@
 <?php
 
+namespace Akh\BitrixOptimization\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Akh\BitrixOptimization\Image;
 

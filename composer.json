@@ -18,6 +18,11 @@
       "Akh\\BitrixOptimization\\": "src"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Akh\\BitrixOptimization\\Tests\\": "tests"
+    }
+  },
   "require": {
     "ext-exif": "*"
   },
