@@ -279,8 +279,7 @@ class LazyContent
                     let itemOffset = el.getAttribute('data-on-scroll-offset');
                     let rect = el.getBoundingClientRect();
                     if (
-                        (document.documentElement.scrollTop + document.documentElement.clientHeight)
-                        > (rect.top - itemOffset) // за сколько пикселей начинать грузить блок
+                        (rect.top - itemOffset) < document.documentElement.clientHeight
                         && el.classList.contains('loading') === false
                     ) {
                         el.classList.add('loading');

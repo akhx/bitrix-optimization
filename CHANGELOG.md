@@ -1,5 +1,9 @@
 # Changelog
-## [Unreleased](https://github.com/akhx/bitrix-optimization/compare/v1.1.0...HEAD)
+## [Unreleased](https://github.com/akhx/bitrix-optimization/compare/v1.1.1...HEAD)
+
+## [1.1.1](https://github.com/akhx/bitrix-optimization/compare/v1.1.0...v1.1.1) - 2021-07-16
+### Исправлено
+- Расчёт времени загрузки LazyContent
 
 ## [1.1.0](https://github.com/akhx/bitrix-optimization/compare/v1.0.0...v1.1.0) - 2021-07-07
 ### Добавлено
