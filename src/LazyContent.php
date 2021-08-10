@@ -273,18 +273,20 @@ class LazyContent
                 getLazyContent(el);
             });
 
-            document.addEventListener('scroll', function () {
-                let scrollLazy = document.querySelectorAll('.js-lazy-page[data-on-scroll="Y"]');
-                Array.prototype.forEach.call(scrollLazy, function (el) {
-                    let itemOffset = el.getAttribute('data-on-scroll-offset');
-                    let rect = el.getBoundingClientRect();
-                    if (
-                        (rect.top - itemOffset) < document.documentElement.clientHeight
-                        && el.classList.contains('loading') === false
-                    ) {
-                        el.classList.add('loading');
-                        getLazyContent(el);
-                    }
+            ['scroll', 'DOMContentLoaded'].forEach(function (e) {
+                document.addEventListener(e, function () {
+                    let scrollLazy = document.querySelectorAll('.js-lazy-page[data-on-scroll="Y"]');
+                    Array.prototype.forEach.call(scrollLazy, function (el) {
+                        let itemOffset = el.getAttribute('data-on-scroll-offset');
+                        let rect = el.getBoundingClientRect();
+                        if (
+                            (rect.top - itemOffset) < document.documentElement.clientHeight
+                            && el.classList.contains('loading') === false
+                        ) {
+                            el.classList.add('loading');
+                            getLazyContent(el);
+                        }
+                    });
                 });
             });
         </script>
