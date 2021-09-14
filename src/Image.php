@@ -57,6 +57,10 @@ class Image
      */
     public static function initEvents(array $option = [])
     {
+        if (php_sapi_name() === 'cli') {
+            return;
+        }
+
         if ($_REQUEST['stop_convert'] === 'Y') {
             $option['webp_active'] = false;
         }
