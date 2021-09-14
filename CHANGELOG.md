@@ -1,5 +1,9 @@
 # Changelog
-## [Unreleased](https://github.com/akhx/bitrix-optimization/compare/v1.1.2...HEAD)
+## [Unreleased](https://github.com/akhx/bitrix-optimization/compare/v1.1.3...HEAD)
+
+## [1.1.3](https://github.com/akhx/bitrix-optimization/compare/v1.1.2...v1.1.3) - 2021-09-14
+### Исправлено
+- Мелкие баги
 
 ## [1.1.2](https://github.com/akhx/bitrix-optimization/compare/v1.1.1...v1.1.2) - 2021-08-10
 ### Исправлено

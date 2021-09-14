@@ -39,7 +39,10 @@ class Image
             '.php',
             'mailto:',
             'tel:',
-            'javascript:'
+            'javascript:',
+            'http://',
+            'https://',
+            '.ico',
         ],
         'webp_support' => [
             IMAGETYPE_JPEG,
@@ -55,7 +58,7 @@ class Image
     public static function initEvents(array $option = [])
     {
         if ($_REQUEST['stop_convert'] === 'Y') {
-            $option['lazy_active'] = false;
+            $option['webp_active'] = false;
         }
 
         static::$option = array_merge(static::$option, $option);
