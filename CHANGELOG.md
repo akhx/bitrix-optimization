@@ -1,5 +1,9 @@
 # Changelog
-## [Unreleased](https://github.com/akhx/bitrix-optimization/compare/v1.1.4...HEAD)
+## [Unreleased](https://github.com/akhx/bitrix-optimization/compare/v1.1.5...HEAD)
+
+## [1.1.5](https://github.com/akhx/bitrix-optimization/compare/v1.1.4...v1.1.5) - 2021-10-04
+### Добавлено
+- Трансляция get параметров в запрос на получение области LazyContent
 
 ## [1.1.4](https://github.com/akhx/bitrix-optimization/compare/v1.1.3...v1.1.4) - 2021-09-14
 ### Исправлено

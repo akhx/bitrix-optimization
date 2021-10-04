@@ -241,7 +241,7 @@ class LazyContent
                     webpSupport: <?= Image::checkWebpSupport() === true ? 'true' : 'false'; ?>
                 };
 
-                let params = '';
+                let params = window.location.search.substring(1);
                 for (let key in data) {
                     if (params !== '') {
                         params += '&';
@@ -255,7 +255,7 @@ class LazyContent
                 request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
                 request.onload = function () {
-                    if (this.status >= 200 && this.status < 400) {
+                    if (this.status === 200) {
                         target.outerHTML = this.response;
 
                         let event = document.createEvent('HTMLEvents');
