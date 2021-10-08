@@ -1,5 +1,9 @@
 # Changelog
-## [Unreleased](https://github.com/akhx/bitrix-optimization/compare/v1.1.5...HEAD)
+## [Unreleased](https://github.com/akhx/bitrix-optimization/compare/v1.1.6...HEAD)
+
+## [1.1.6](https://github.com/akhx/bitrix-optimization/compare/v1.1.5...v1.1.6) - 2021-10-08
+### Добавлено
+- Возможность не конвертировать изображение по классу skip-webp
 
 ## [1.1.5](https://github.com/akhx/bitrix-optimization/compare/v1.1.4...v1.1.5) - 2021-10-04
 ### Добавлено

@@ -42,6 +42,9 @@ $option = [
         'swiper-lazy'
     ],
     'webp_active' => true,
+    'webp_exclusions' => [
+        'skip-webp'
+    ],
     'webp_checkHref' => false,
     'webp_checkHrefExclusions' => [
         '#',

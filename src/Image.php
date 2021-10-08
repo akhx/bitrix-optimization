@@ -29,6 +29,9 @@ class Image
             'swiper-lazy'
         ],
         'webp_active' => true,
+        'webp_exclusions' => [
+            'skip-webp'
+        ],
         'webp_checkHref' => false,
         'webp_checkHrefExclusions' => [
             '#',
@@ -104,7 +107,7 @@ class Image
             foreach ($matches[0] as $tag) {
                 $tempTag = $tag;
 
-                if (static::$option['webp_active'] === true) {
+                if (static::$option['webp_active'] === true && str_ireplace(static::$option['webp_exclusions'], '', $tag) === $tag) {
                     $arSrc = static::getSrc($tempTag);
 
                     if (!empty($arSrc)) {
