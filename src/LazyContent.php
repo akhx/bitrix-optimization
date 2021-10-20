@@ -3,6 +3,7 @@
 namespace Akh\BitrixOptimization;
 
 use Bitrix\Main\Context;
+use Bitrix\Main\Page\Asset;
 
 
 /**
@@ -23,7 +24,7 @@ class LazyContent
      *
      * @param string $filePath Файл для ленивой загрузки
      * @param array $arParams Массив параметров для передачи в CMain::IncludeFile()
-     * @param bool $onScroll будет ли подгружаться блок по скролу или сразу по onLoad
+     * @param bool $onScroll Будет ли подгружаться блок по скролу или сразу по onLoad
      * @uses CMain::IncludeFile()
      * @link https://dev.1c-bitrix.ru/api_help/main/reference/cmain/includefile.php
      */
@@ -117,7 +118,7 @@ class LazyContent
          */
         if (!self::isLazyAjax()) {
             /**
-             * Это не запрос на отдачу области
+             * Это не запрос на отдачу области.
              * Отдаем блок для работы js (подразумевается что js перемещается в конец страницы)
              */
             echo static::getJs();
@@ -139,14 +140,40 @@ class LazyContent
         } else {
             if (self::$currentKey == self::$requestKey) {
                 /**
-                 * Это запрос к нашему классу и ключи запроса на конретный вызов совпали
-                 * Отдаем запрошенную область
+                 * Это запрос к нашему классу и ключи запроса на конкретный вызов совпали,
+                 * отдаем запрошенную область
                  */
                 self::getApplication()->RestartBuffer();
+                $arAssetBefore = self::getAsset();
                 self::getApplication()->IncludeFile(
                     $filePath,
                     $arParams
                 );
+                $arAssetAfter = self::getAsset();
+
+                foreach ($arAssetAfter as $type => $list) {
+                    $arDiff = array_diff($list, $arAssetBefore[$type]);
+                    if (!empty($arDiff)) {
+                        switch ($type) {
+                            case 'css':
+                                foreach ($arDiff as $cssPath) {
+                                    echo '<link href="' . $cssPath . '" type="text/css" rel="stylesheet">';
+                                }
+                                break;
+                            case 'js':
+                                echo '<script data-need-replace>';
+                                echo 'let head = document.getElementsByTagName("head")[0];';
+                                foreach ($arDiff as $jsPath) {
+                                    echo 'script = document.createElement("script");';
+                                    echo 'script.src = "' . $jsPath . '";';
+                                    echo 'head.appendChild(script);';
+                                }
+                                echo '</script>';
+                                break;
+                        }
+                    }
+                }
+
                 require($_SERVER["DOCUMENT_ROOT"] . '/bitrix/modules/main/include/epilog_after.php');
                 exit();
             }
@@ -258,6 +285,12 @@ class LazyContent
                     if (this.status === 200) {
                         target.outerHTML = this.response;
 
+                        Array.prototype.forEach.call(document.querySelectorAll('script[data-need-replace]'), function (oldScript) {
+                            let newScript = document.createElement('script');
+                            newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                            oldScript.parentNode.replaceChild(newScript, oldScript);
+                        });
+
                         let event = document.createEvent('HTMLEvents');
                         event.initEvent('lazycontentloaded', true, false);
                         document.dispatchEvent(event);
@@ -313,6 +346,34 @@ class LazyContent
         global $USER;
         if (is_object($USER)) {
             return $USER->isAdmin();
+        }
+
+        return false;
+    }
+
+    protected static function getAsset(): array
+    {
+        $asset = Asset::getInstance();
+        $arResult = [];
+        foreach (['css', 'js'] as $type) {
+            $arResult[$type] = [];
+            $arAsset = self::getPrivateProp($asset, $type);
+            if (is_array($arAsset)) {
+                $arResult[$type] = array_keys($arAsset);
+            }
+        }
+
+        return $arResult;
+    }
+
+    protected static function getPrivateProp(object $object, string $property)
+    {
+        $array = (array)$object;
+        $propertyLength = strlen($property);
+        foreach ($array as $key => $value) {
+            if (substr($key, -$propertyLength) === $property) {
+                return $value;
+            }
         }
 
         return false;

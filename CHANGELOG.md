@@ -1,5 +1,9 @@
 # Changelog
-## [Unreleased](https://github.com/akhx/bitrix-optimization/compare/v1.1.6...HEAD)
+## [Unreleased](https://github.com/akhx/bitrix-optimization/compare/v1.2.0...HEAD)
+
+## [1.2.0](https://github.com/akhx/bitrix-optimization/compare/v1.1.6...v1.2.0) - 2021-10-20
+### Добавлено
+- Загрузка css и js из загружаемых областей
 
 ## [1.1.6](https://github.com/akhx/bitrix-optimization/compare/v1.1.5...v1.1.6) - 2021-10-08
 ### Добавлено
