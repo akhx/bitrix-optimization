@@ -130,6 +130,32 @@ class Image
             $content = str_replace(array_keys($toReplace), array_values($toReplace), $content);
         }
 
+        if (static::$option['webp_active'] === true) {
+            if (preg_match_all('#<source[^>]*src[^>]*>#Usmi', $clearContent, $matches)) {
+                $toReplace = [];
+                foreach ($matches[0] as $tag) {
+                    $tempTag = $tag;
+
+                    if (str_ireplace(static::$option['webp_exclusions'], '', $tag) === $tag) {
+                        $arSrc = static::getSrc($tempTag);
+
+                        if (!empty($arSrc)) {
+                            foreach ($arSrc as $src) {
+                                $endSrc = static::webpConvert($src);
+                                $tempTag = str_replace($src, $endSrc, $tempTag);
+                            }
+                        }
+                    }
+
+                    if ($tag != $tempTag) {
+                        $toReplace[$tag] = $tempTag;
+                    }
+                }
+
+                $content = str_replace(array_keys($toReplace), array_values($toReplace), $content);
+            }
+        }
+
         /**
          * поиск изображений в ссылках
          */
